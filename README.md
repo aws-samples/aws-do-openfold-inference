@@ -12,7 +12,13 @@ It is assumed that an EKS cluster exists and contains nodegroups of the desired 
 
 # 3. Download OpenFold Data
 The [download-openfold-data](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/download-openfold-data) folder contains all the necessary scripts to download data from S3 buckets s3://aws-batch-architecture-for-alphafold-public-artifacts/ and s3://pdbsnapshots/ into the FSx for Lustre
-file system. To download data, cd into the download-openfold-data folder and update <ECR-registry-path> and run `./build.sh` to build the Docker image and do the same for `./push.sh`. Once that is done run `kubectl apply -f fsx-data-prep-pod.yaml` to kickstart jobs to download data.
+file system. To download data, cd into the download-openfold-data folder and update <ECR-registry-path> and run `./build.sh` to build the Docker image and do the same for `./push.sh`. Once that is done run `kubectl apply -f fsx-data-prep-pod.yaml` to kickstart jobs to download data. Clone OpenFold model files from https://huggingface.co/nz/OpenFold and download them into an S3 bucket and
+from there into an FSx for Lustre file system using the above steps. 
+  
+# 4. Run OpenFold Inference
+Once the data and model files are downloaded, 
+  
+ 
 
 
 TODO: Fill this README out!
