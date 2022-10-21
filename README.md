@@ -32,18 +32,6 @@ c. Run `kubectl apply -f cameo-yamls` to kick off 92 alignment computation pods
   
 # 7. Inference with OpenFold APIs
 The [inference-tests](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/cameo/inference-tests) folder contains all the scripts necessary to call OpenFold Model APIs and run inference.
-  
-
-  
- 
-
-
-TODO: Fill this README out!
-
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
 
 ## Security
 
