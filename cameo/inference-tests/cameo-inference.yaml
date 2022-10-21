@@ -8,7 +8,7 @@ spec:
     beta.kubernetes.io/instance-type: "r6i.xlarge"
   containers:
   - name: main
-    image: "999701187340.dkr.ecr.us-west-2.amazonaws.com/temp-fasta"
+    image: " <ECR-registry-path>/cameo-inference"
     imagePullPolicy: Always
     volumeMounts:
     - name: fsx-pv
