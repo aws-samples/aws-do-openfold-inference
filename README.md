@@ -1,4 +1,4 @@
-## My Project
+## AWS EKS Architecture For OpenFold Inference
 
 TODO: Fill this README out!
 
@@ -9,7 +9,7 @@ Be sure to:
 
 ## Security
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information. Prior to any production deployment, customers should work with their local security teams to evaluate any additional controls
 
 ## License
 

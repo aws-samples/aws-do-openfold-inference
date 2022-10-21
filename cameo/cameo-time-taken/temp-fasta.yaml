@@ -1,0 +1,24 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: temp-fasta-pod
+
+spec:
+  nodeSelector:
+    beta.kubernetes.io/instance-type: "r6i.xlarge"
+  containers:
+  - name: main
+    image: "<ECR-registry-path>/temp-fasta"
+    imagePullPolicy: Always
+    volumeMounts:
+    - name: fsx-pv
+      mountPath: /fsx-shared
+    - name: dshm
+      mountPath: /dev/shm
+  volumes:
+  - name: fsx-pv
+    persistentVolumeClaim:
+      claimName: fsx-pvc
+  - name: dshm
+    emptyDir:
+      medium: Memory

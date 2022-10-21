@@ -1,0 +1,32 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: cameo-pod
+
+spec:
+  nodeSelector:
+    beta.kubernetes.io/instance-type: "r6i.xlarge"
+  containers:
+  - name: main
+    image: "<ECR-registry-path>/cameo"
+    imagePullPolicy: Always
+    resources:
+      requests:
+        memory: "16Gi"
+      limits:
+        memory: "32Gi"
+    args:
+        - "--cpus=4"
+        - "--one_file_path="
+    volumeMounts:
+    - name: fsx-pv
+      mountPath: /fsx-shared
+    - name: dshm
+      mountPath: /dev/shm
+  volumes:
+  - name: fsx-pv
+    persistentVolumeClaim:
+      claimName: fsx-pvc
+  - name: dshm
+    emptyDir:
+      medium: Memory

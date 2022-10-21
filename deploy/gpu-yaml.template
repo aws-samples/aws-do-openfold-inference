@@ -1,0 +1,63 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ${instance_name}
+  namespace: ${namespace}
+  labels:
+    app: ${instance_name}
+spec:
+  ports:
+  - name: preds
+    port: ${service_port}
+    targetPort: pod-port
+  type: ClusterIP
+  selector:
+    app: ${instance_name}
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ${instance_name}
+  namespace: ${namespace}
+  labels:
+    app: ${instance_name}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${instance_name}
+  template:
+    metadata:
+      labels:
+        app: ${instance_name}
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/instance-type: "${instance_type}"
+      containers:
+      - name: main
+        image: "<ECR-registry-path>/openfold"
+        imagePullPolicy: Always
+        env:
+          - name: NUM_MODELS
+            value: "${num_models}"
+        ports:
+        - name: pod-port
+          containerPort: 8080
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+        volumeMounts:
+        - name: fsx-pv
+          mountPath: /fsx-shared
+          # The following enables the worker pods to use increased shared memory
+          # which is required when specifying more than 0 data loader workers
+        - name: dshm
+          mountPath: /dev/shm
+      volumes:
+      - name: fsx-pv
+        persistentVolumeClaim:
+          claimName: fsx-pvc
+      - name: dshm
+        emptyDir:
+          medium: Memory

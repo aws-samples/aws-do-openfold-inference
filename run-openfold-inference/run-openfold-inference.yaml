@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: openfold-inference-pod
+spec:
+  nodeSelector:
+    beta.kubernetes.io/instance-type: "p3.2xlarge"
+  containers:
+    - name: openfold-inference-worker
+      image: <ECR-registry-path>/openfold
+      imagePullPolicy: Always
+      
+      args:
+        - "/fsx-shared/openfold/fasta_dir"
+        - "/fsx-shared/openfold/data/pdb_mmcif/mmcif_files/"
+        - "--config_preset=model_1_ptm"
+        - "--uniref90_database_path=/fsx-shared/openfold/data/uniref90/uniref90.fasta"
+        - "--mgnify_database_path=/fsx-shared/openfold/data/mgnify/mgy_clusters_2018_12.fa"
+        - "--pdb70_database_path=/fsx-shared/openfold/data/pdb70/pdb70"
+        - "--uniclust30_database_path=/fsx-shared/openfold/data/uniclust30/uniclust30_2018_08/uniclust30_2018_08"
+        - "--output_dir=/fsx-shared/openfold/output_dir/"
+        - "--bfd_database_path=/fsx-shared/openfold/data/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt"
+        - "--model_device=cuda:0"
+        - "--jackhmmer_binary_path=/opt/conda/envs/openfold_venv/bin/jackhmmer"
+        - "--hhblits_binary_path=/opt/conda/envs/openfold_venv/bin/hhblits"
+        - "--hhsearch_binary_path=/opt/conda/envs/openfold_venv/bin/hhsearch"
+        - "--kalign_binary_path=/opt/conda/envs/openfold_venv/bin/kalign"
+        - "--openfold_checkpoint_path=/fsx-shared/openfold/openfold_params/finetuning_ptm_2.pt"
+      volumeMounts:
+        - name: fsx-pv
+          mountPath: /fsx-shared
+        # The following enables the worker pods to use increased shared memory 
+        # which is required when specifying more than 0 data loader workers
+        - name: dshm
+          mountPath: /dev/shm
+  volumes:
+    - name: fsx-pv
+      persistentVolumeClaim:
+        claimName: fsx-pvc
+    - name: dshm
+      emptyDir:     
+        medium: Memory
