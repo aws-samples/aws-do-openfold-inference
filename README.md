@@ -7,6 +7,8 @@ Columbia University has publicly released the model weights and training data co
 
 In this repo, we will show how you can deploy OpenFold models on Amazon EKS and how to scale the EKS clusters to drastically reduce multi-sequence alignment (MSA) computation and protein structure inference times.We will show the performance of this architecture to run alignment computation and inference on the popular open source Cameo dataset. Running this workload end to end on all 92 proteins available in the [Cameo](https://www.cameo3d.org/) dataset would take a total of 8 hours which includes downloading the required data, alignment computation and inference times. Figure 1 shows sample EKS architecture for inference with OpenFold.
 
+![Architecture](https://github.com/aws-samples/aws-do-openfold-inference/blob/main/Achitecture.png)
+
 
 # 2. Prerequisites
 It is assumed that an EKS cluster exists and contains nodegroups of the desired target instance types. You can use this [repo](https://github.com/aws-samples/aws-do-eks) to create the cluster. [aws-do-eks](https://github.com/aws-samples/aws-do-eks) also includes steps to create and mount an FSx for Lustre volume on an EKS cluster [here](https://github.com/aws-samples/aws-do-eks/tree/main/Container-Root/eks/deployment/csi/fsx)
