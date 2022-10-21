@@ -15,7 +15,11 @@ The [download-openfold-data](https://github.com/aws-samples/aws-do-openfold-infe
 file system. To download data, cd into the download-openfold-data folder and update <ECR-registry-path> and run `./build.sh` to build the Docker image and do the same for `./push.sh`. Once that is done run `kubectl apply -f fsx-data-prep-pod.yaml` to kickstart jobs to download data. Clone OpenFold model files from https://huggingface.co/nz/OpenFold and download them into an S3 bucket and from there into an FSx for Lustre file system using the above steps. 
   
 # 4. Run OpenFold Inference
-Once the data and model files are downloaded, the [run-openfold-inference](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/run-openfold-inference) provides all the scripts necessary to run [run-pretrained-openfold.py](https://github.com/aqlaboratory/openfold/blob/main/run_pretrained_openfold.py) script on EKS. 
+Once the data and model files are downloaded, the [run-openfold-inference](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/run-openfold-inference) provides all the scripts necessary to run [run-pretrained-openfold.py] (https://github.com/aqlaboratory/openfold/blob/main/run_pretrained_openfold.py) script on EKS. Follow the `./build.sh` and `./push.sh` scripts to build and push docker images to ECR. You can start an inference pod by running `kubectl apply -f run-openfold-inference.yaml`.
+  
+# 5
+  
+
   
  
 
