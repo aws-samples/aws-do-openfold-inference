@@ -1,3 +1,6 @@
 #!/bin/bash
-docker run -it --gpus 0 <ECR-registry-path>/cameo /bin/bash
+
+source ../docker.properties
+
+docker run -it --gpus 0 ${registry}/cameo /bin/bash
 

@@ -1,5 +1,8 @@
-#Login
-aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <ECR-registry-path>
+#!/bin/bash
+
+source docker.properties
+
+#Login to ECR
 
 # Push Docker image
-docker push <ECR-registry-path>/openfold
+docker push ${registry}/openfold

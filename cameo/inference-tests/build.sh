@@ -1,4 +1,5 @@
 #!/bin/bash
 
+source ../../docker.properties
 
-docker build -t  <ECR-registry-path>/cameo-inference -f Dockerfile .
+docker build -t ${registry}/cameo-inference -f Dockerfile .

@@ -5,5 +5,9 @@
 # SPDX-License-Identifier: MIT-0                                     #
 ######################################################################
 
+#!/bin/bash
+
+source ../docker.properties
+
 # Build Docker image
-docker image build -t <ECR-registry-path>/s3-fsx .
+docker image build -t ${registry}/s3-fsx .

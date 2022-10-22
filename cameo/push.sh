@@ -1,4 +1,8 @@
+#!/bin/bash
+
+source ../docker.properties
+
 #Login to ECR
 
 # Push Docker image
-docker push <ECR-registry-path>/cameo
+docker push ${registry}/cameo

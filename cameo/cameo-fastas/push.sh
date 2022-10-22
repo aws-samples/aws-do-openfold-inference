@@ -1,4 +1,6 @@
 #!/bin/bash
 
+source ../../docker.properties
+
 #Login to ECR
-docker push <ECR-registry-path>/temp-fasta
+docker push ${registry}/temp-fasta

@@ -1,1 +1,5 @@
-docker image build -t <ECR-registry-path>/cameo .
+#!/bin/bash
+
+source ../docker.properties
+
+docker image build -t ${registry}/cameo .

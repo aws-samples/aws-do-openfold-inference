@@ -1,4 +1,7 @@
 #!/bin/bash
 
+source ../../docker.properties
+
 # Login to ECR
-docker push <ECR-registry-path>/cameo-inference
+
+docker push ${registry}/cameo-inference

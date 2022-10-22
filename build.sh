@@ -1,1 +1,5 @@
-docker image build -t <ECR-registry-path>/openfold .
+#!/bin/bash
+
+source docker.properties
+
+docker image build -t ${registry}/openfold .

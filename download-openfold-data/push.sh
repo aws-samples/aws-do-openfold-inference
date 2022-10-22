@@ -5,7 +5,9 @@
 # SPDX-License-Identifier: MIT-0                                     #
 ######################################################################
 
+source docker.properties
+
 #Login to ECR
 
 # Push Docker image
-docker push <ECR-registry-path>/s3-fsx
+docker push ${registry}/s3-fsx

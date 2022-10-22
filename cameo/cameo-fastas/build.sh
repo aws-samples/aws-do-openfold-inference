@@ -1,4 +1,5 @@
 #!/bin/bash
 
+source ../../docker.properties
 
-docker build -t <ECR-registry-path>/temp-fasta -f Dockerfile .
+docker build -t ${registry}/temp-fasta -f Dockerfile .
