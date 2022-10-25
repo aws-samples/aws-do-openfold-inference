@@ -22,21 +22,69 @@ It is assumed that an EKS cluster exists and contains nodegroups of the desired 
 The [download-openfold-data](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/download-openfold-data) folder contains all the necessary scripts to download data from S3 buckets s3://aws-batch-architecture-for-alphafold-public-artifacts/ and s3://pdbsnapshots/ into the FSx for Lustre
 file system. To download data, cd into the download-openfold-data folder and update <ECR-registry-path> and run `./build.sh` to build the Docker image and do the same for `./push.sh`. Once that is done run `kubectl apply -f fsx-data-prep-pod.yaml` to kickstart jobs to download data. Clone OpenFold model files from https://huggingface.co/nz/OpenFold and download them into an S3 bucket and from there into an FSx for Lustre file system using the above steps. 
   
+```console
+cd ./download-openfold-data
+./build.sh
+./push.sh
+kubectl apply -f fsx-data-prep-pod.yaml
+```
+  
 # 4. Run OpenFold Inference
 Once the data and model files are downloaded, the [run-openfold-inference](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/run-openfold-inference) provides all the scripts necessary to run [run-pretrained-openfold.py] (https://github.com/aqlaboratory/openfold/blob/main/run_pretrained_openfold.py) script on EKS. Follow the `./build.sh` and `./push.sh` scripts to build and push docker images to ECR. You can start an inference pod by running `kubectl apply -f run-openfold-inference.yaml`.
+ 
+```console
+cd ./run-openfold-inference
+./run-openfold-inference/build.sh
+./run-openfold-inference/push.sh
+kubectl apply -f run-openfold-inference.yaml
+```
   
 # 5. Deploy OpenFold Models as APIs
 The [inference_config.properties](https://github.com/aws-samples/aws-do-openfold-inference/blob/main/inference_config.properties) file gives you a configuration script to specify openfold parameters and hardware specifications that you would use to pack OpenFold models in a container and deploy it. In addition to this config, the [pack](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/pack) folder exposes alignment computation and inference calls from [run-pretrained-openfold.py] (https://github.com/aqlaboratory/openfold/blob/main/run_pretrained_openfold.py) as apis using the fast-api framework [here](https://github.com/aws-samples/aws-do-openfold-inference/blob/main/pack/fastapi-server.py). Run the `./deploy.sh` script to deploy models on EKS.
+  
+```console
+./build.sh
+.push.sh
+./deploy.sh
+```
   
 # 6. Alignment Computation
 In this repo, we share an example where we run alignment computation on all 92 proteins available in the [Cameo](https://www.cameo3d.org/) dataset. The [cameo](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/cameo) folder contains all scripts necessary for alignment computation and inference tests on the [Cameo](https://www.cameo3d.org/) dataset. Please follow the following steps to set up alignment computation jobs on EKS:
   
 a. Build and push docker image in the [cameo-fastas](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/cameo/cameo-fastas) folder and run `kubectl apply -f temp-fasta.yaml` to preprocess the Cameo data into individual fasta files per protein sequence in FSx for Lustre file system.
+  
+```console
+cd ./cameo/cameo-fastas/
+./build.sh
+./push.sh
+kubectl apply -f temp-fasta.yaml
+```
+  
 b. Run [run-grid.py](https://github.com/aws-samples/aws-do-openfold-inference/blob/main/cameo/run-grid.py) code that will use [run-cameo.yaml](https://github.com/aws-samples/aws-do-openfold-inference/blob/main/cameo/run-cameo.yaml) as template to create 92 yaml files, one for each protein sequence) and save it in a `cameo-yamls` folder
+  
+```console
+cd ./cameo/
+./build.sh
+./push.sh
+python run-grid.py
+```
+
 c. Run `kubectl apply -f cameo-yamls` to kick off 92 alignment computation pods
+  
+```console
+cd ./cameo/
+kubectl apply -f cameo-yamls
+```
   
 # 7. Inference with OpenFold APIs
 The [inference-tests](https://github.com/aws-samples/aws-do-openfold-inference/tree/main/cameo/inference-tests) folder contains all the scripts necessary to call OpenFold Model APIs and run inference.
+  
+```console
+cd ./cameo/inference-tests/
+./build.sh
+./push.sh
+kubectl apply -f cameo-inference.yaml
+```
 
 ## Security
 
