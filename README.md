@@ -1,4 +1,4 @@
-## AWS EKS Architecture For OpenFold Inference
+## Amazon EKS Architecture For OpenFold Inference
 
 # 1. Overview
 OpenFold, developed by Columbia University, is an open-source protein structure prediction model implemented with PyTorch. OpenFold is a faithful reproduction of the Alphafold2 protein structure prediction model, while delivering performance improvements over AlphaFold2. It contains a number of training and inference specific optimizations that take advantage of different memory-time tradeoffs for different protein lengths based on model training or inference runs. For training, OpenFold supports FlashAttention optimizations that accelerate the mutli sequence alignment (MSA) attention component. FlashAttention optimizations along with JIT compilation accelerate the inference pipeline delivering twice the performance for shorter protein sequences than AlphaFold2.
