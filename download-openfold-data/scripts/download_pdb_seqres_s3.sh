@@ -21,9 +21,9 @@ fi
 
 DOWNLOAD_DIR="$1"
 ROOT_DIR="${DOWNLOAD_DIR}/pdb_seqres"
-LATEST_PDB_SNAPSHOT=$(aws s3 ls --no-sign-request s3://pdbsnapshots/ | tail -n 3 | head -n 1 | awk '{print $2}')
+##LATEST_PDB_SNAPSHOT=$(aws s3 ls --no-sign-request s3://pdbsnapshots/ | tail -n 3 | head -n 1 | awk '{print $2}')
 
-SOURCE_URL="s3://pdbsnapshots/${LATEST_PDB_SNAPSHOT}pub/pdb/derived_data/pdb_seqres.txt"
+SOURCE_URL="s3://aws-hcls-ml/public_assets_support_materials/guidance-for-protein-folding/compressed/pdb_seqres.txt"
 BASENAME=$(basename "${SOURCE_URL}")
 mkdir --parents "${ROOT_DIR}"
 
