@@ -23,7 +23,7 @@ DOWNLOAD_DIR="$1"
 ROOT_DIR="${DOWNLOAD_DIR}/mgnify"
 # Mirror of:
 # ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/peptide_database/2018_12/mgy_clusters.fa.gz
-SOURCE_URL="s3://aws-batch-architecture-for-alphafold-public-artifacts/mgnify/mgy_clusters_2018_12.fa.gz"
+SOURCE_URL="s3://aws-hcls-ml/public_assets_support_materials/guidance-for-protein-folding/compressed/mgy_clusters_2022_05.fa.gz"
 BASENAME=$(basename "${SOURCE_URL}")
 
 mkdir --parents "${ROOT_DIR}"
