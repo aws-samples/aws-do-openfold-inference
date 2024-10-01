@@ -23,24 +23,12 @@ fi
 DOWNLOAD_DIR="$1"
 ROOT_DIR="${DOWNLOAD_DIR}/uniprot"
 
-TREMBL_SOURCE_URL="s3://aws-batch-architecture-for-alphafold-public-artifacts/uniprot/uniprot_trembl.fasta.gz"
-TREMBL_BASENAME=$(basename "${TREMBL_SOURCE_URL}")
-TREMBL_UNZIPPED_BASENAME="${TREMBL_BASENAME%.gz}"
-
-SPROT_SOURCE_URL="s3://aws-batch-architecture-for-alphafold-public-artifacts/uniprot/uniprot_sprot.fasta.gz"
-SPROT_BASENAME=$(basename "${SPROT_SOURCE_URL}")
-SPROT_UNZIPPED_BASENAME="${SPROT_BASENAME%.gz}"
+SOURCE_URL="s3://aws-hcls-ml/public_assets_support_materials/guidance-for-protein-folding/compressed/uniprot.tar.gz"
+BASENAME=$(basename "${SOURCE_URL}")
 
 mkdir --parents "${ROOT_DIR}"
-aws s3 cp --no-sign-request "${TREMBL_SOURCE_URL}" "${ROOT_DIR}"
-aws s3 cp --no-sign-request "${SPROT_SOURCE_URL}" "${ROOT_DIR}"
+aws s3 cp --no-sign-request "${SOURCE_URL}" "${ROOT_DIR}"
+tar --extract --verbose --file="${ROOT_DIR}/${BASENAME}" --directory="${ROOT_DIR}"
 
-pushd "${ROOT_DIR}"
-gunzip "${ROOT_DIR}/${TREMBL_BASENAME}"
-gunzip "${ROOT_DIR}/${SPROT_BASENAME}"
 
-# Concatenate TrEMBL and SwissProt, rename to uniprot and clean up.
-cat "${ROOT_DIR}/${SPROT_UNZIPPED_BASENAME}" >> "${ROOT_DIR}/${TREMBL_UNZIPPED_BASENAME}"
-mv "${ROOT_DIR}/${TREMBL_UNZIPPED_BASENAME}" "${ROOT_DIR}/uniprot.fasta"
-rm "${ROOT_DIR}/${SPROT_UNZIPPED_BASENAME}"
-popd
+
