@@ -23,7 +23,7 @@ DOWNLOAD_DIR="$1"
 ROOT_DIR="${DOWNLOAD_DIR}/uniclust30"
 # Mirror of:
 # http://wwwuser.gwdg.de/~compbiol/uniclust/2018_08/uniclust30_2018_08_hhsuite.tar.gz
-SOURCE_URL="s3://aws-batch-architecture-for-alphafold-public-artifacts/uniclust/uniclust30_2018_08_hhsuite.tar.gz"
+SOURCE_URL="s3://aws-hcls-ml/public_assets_support_materials/guidance-for-protein-folding/compressed/UniRef30_2021_03.tar.gz"
 BASENAME=$(basename "${SOURCE_URL}")
 
 mkdir --parents "${ROOT_DIR}"
