@@ -21,12 +21,9 @@ fi
 
 DOWNLOAD_DIR="$1"
 ROOT_DIR="${DOWNLOAD_DIR}/uniref90"
-SOURCE_URL="s3://aws-batch-architecture-for-alphafold-public-artifacts/uniref90/uniref90.fasta.gz"
+SOURCE_URL="s3://aws-hcls-ml/public_assets_support_materials/guidance-for-protein-folding/compressed/uniref90.tar.gz"
 BASENAME=$(basename "${SOURCE_URL}")
 
 mkdir --parents "${ROOT_DIR}"
 aws s3 cp --no-sign-request "${SOURCE_URL}" "${ROOT_DIR}"
-
-pushd "${ROOT_DIR}"
-gunzip "${ROOT_DIR}/${BASENAME}"
-popd
+tar --extract --verbose --file="${ROOT_DIR}/${BASENAME}" --directory="${ROOT_DIR}"
